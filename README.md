@@ -1,5 +1,6 @@
 # Chemistry-Award-Matching
-These sets of scripts allow a user to match their own research description to funded chemistry awards and see the publication trends emerging from those awards
+These sets of scripts allow a user to match their own research description to funded chemistry awards and see the publication trends emerging from those awards.
+There are three separate scripts - one to obtain the publication information (cross ref paper data.py), one to train the model (doc2vec abstract training.py) and one that reads user input data and matches similar awards and shows funding and publication trends (research matching.py).  Each of these scripts have their own self contained functions and calls, but below I was through the basic procedural flow.  See the commenting in each script for more information.
 
 The first step in setting up this routine is downloading the award informatin from the National Science Foundation. A copy of data is included in this repository, but it can also be found here:
 
