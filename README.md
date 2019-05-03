@@ -270,13 +270,8 @@ Now we can start training the model. First every abstract is tagged with it's aw
 <span class="n">model</span><span class="o">.</span><span class="n">build_vocab</span><span class="p">(</span><span class="n">train_corpus</span><span class="p">)</span>
 <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train_corpus</span><span class="p">,</span> <span class="n">total_examples</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">corpus_count</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">epochs</span><span class="p">)</span>   
 <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;doc2vec_abstracts&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
+</pre>
+ We can run a 'sanity check' on our model such that when an abstract the model is trained on is passed through the model, the model correctly identifies the same abstract as the most similar.
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
@@ -299,20 +294,9 @@ Now we can start training the model. First every abstract is tagged with it's aw
 <span class="n">percent</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">rank</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">train_corpus</span><span class="p">))</span><span class="o">*</span><span class="mi">100</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The model correctly matched the training set </span><span class="si">{0}% o</span><span class="s1">f the time with an average similiarity of </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">percent</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">simscore</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span>
     
-</pre></div>
+</pre>
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
+This model correctly matches the abstracts 92% of the time with reasonably high similarity scores.
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>The model correctly matched the training set 92.1% of the time with an average similiarity of 0.875
