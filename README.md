@@ -469,6 +469,7 @@ Now the awards and publication data are matched up based on the similar awards f
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre>
+  
   https://github.com/melissajohnsonolson/Chemistry-Award-Matching/blob/master/Figure_1.png
 
 <div class="cell border-box-sizing code_cell rendered">
