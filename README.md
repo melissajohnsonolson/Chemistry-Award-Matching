@@ -1,8 +1,17 @@
 # Chemistry-Award-Matching
 These sets of scripts allow a user to match their own research description to funded chemistry awards and see the publication trends emerging from those awards
 
+The first step in setting up this routine is downloading the award informatin from the National Science Foundation. A copy of data is included in this repository, but it can also be found here:
 
+https://www.nsf.gov/awardsearch/advancedSearch.jsp
 
+It does not necessairly need to be chemistry data, and can come from any division or directorate, but be sure to alter the pgms parameter in the model training script as it currently filters out all programs except for the core chemistry research programs. 
+
+The publication data used later on can be generated with the crossref paper data script. It reads in the awards numbers from the data file above and returns publication data tagged with each award number.
+
+Once this data has all been collected, the Doc2Vec model can be trained with the doc2vec abstract training script. It is wrapped up as a function, but each step is broken down below:
+
+Import the necessary libraries and set the directory to the location of the abstract data. Load the csv into the function.
 <body>
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
@@ -23,30 +32,6 @@ These sets of scripts allow a user to match their own research description to fu
 <span class="kn">import</span> <span class="nn">gensim</span>
 <span class="kn">from</span> <span class="nn">gensim.models.doc2vec</span> <span class="k">import</span> <span class="n">Doc2Vec</span><span class="p">,</span> <span class="n">TaggedDocument</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>C:\Users\johns\AppData\Local\conda\conda\envs\py36\lib\site-packages\gensim\utils.py:1197: UserWarning: detected Windows; aliasing chunkize to chunkize_serial
-  warnings.warn(&#34;detected Windows; aliasing chunkize to chunkize_serial&#34;)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
@@ -55,42 +40,16 @@ These sets of scripts allow a user to match their own research description to fu
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">awds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;NSF CHE 2012.csv&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span>
-<span class="n">awds</span><span class="p">[</span><span class="s1">&#39;StartDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">awds</span><span class="p">[</span><span class="s1">&#39;StartDate&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
-<span class="n">awds</span><span class="p">[</span><span class="s1">&#39;EndDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">awds</span><span class="p">[</span><span class="s1">&#39;EndDate&#39;</span><span class="p">])</span>
-<span class="n">awds</span><span class="p">[</span><span class="s1">&#39;AwardedAmountToDate&#39;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;$&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">awds</span><span class="p">[</span><span class="s1">&#39;AwardedAmountToDate&#39;</span><span class="p">]]</span>
-<span class="n">awds</span><span class="p">[</span><span class="s1">&#39;AwardedAmountToDate&#39;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">awds</span><span class="p">[</span><span class="s1">&#39;AwardedAmountToDate&#39;</span><span class="p">]]</span>
-<span class="n">awds</span><span class="p">[</span><span class="s1">&#39;AwardedAmountToDate&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">awds</span><span class="p">[</span><span class="s1">&#39;AwardedAmountToDate&#39;</span><span class="p">])</span>
+</span>
 <span class="n">awds</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[2]:</div>
+ 
+Here you can see the format of the awards data
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+ 
 </style>
 <table border="1" class="dataframe">
   <thead>
