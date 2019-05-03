@@ -302,12 +302,9 @@ This model correctly matches the abstracts 92% of the time with reasonably high 
 <pre>The model correctly matched the training set 92.1% of the time with an average similiarity of 0.875
 </pre>
 </div>
-</div>
 
-</div>
-</div>
+Now we can start running research descriptions through the research matching script. The user inputs their own block of text as a string. Below is an example from a published paper's abstract:
 
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
@@ -318,31 +315,10 @@ This model correctly matches the abstracts 92% of the time with reasonably high 
 
 <span class="n">new_text</span> <span class="o">=</span> <span class="s1">&#39;The development of biorenewable and chemically recyclable plastics holds real potential to not only preserve natural resources but also solve the end-of-life issue of plastic waste. However, materializing such potential and ultimately establishing a circular plastics economy requires that three challenges be met: energy cost, depolymerization selectivity, and depolymerizability and performance tradeoffs. Recent advances made in this field, especially the discovery of infinitely recyclable plastics, have yielded feasible solutions and design principles. Future directions will focus on designing monomer and polymer structures that deliver properties and performances for tailored application needs while maintaining complete recyclability and catalyst structures and integrated processes with high (de)polymerization activity, selectivity, and efficiency, ultimately solving the severe worldwide environmental problems created by non-recyclable plastics production and disposal.&#39;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">new_text</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
+</pre>
 <pre>The development of biorenewable and chemically recyclable plastics holds real potential to not only preserve natural resources but also solve the end-of-life issue of plastic waste. However, materializing such potential and ultimately establishing a circular plastics economy requires that three challenges be met: energy cost, depolymerization selectivity, and depolymerizability and performance tradeoffs. Recent advances made in this field, especially the discovery of infinitely recyclable plastics, have yielded feasible solutions and design principles. Future directions will focus on designing monomer and polymer structures that deliver properties and performances for tailored application needs while maintaining complete recyclability and catalyst structures and integrated processes with high (de)polymerization activity, selectivity, and efficiency, ultimately solving the severe worldwide environmental problems created by non-recyclable plastics production and disposal.
 </pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
+Now the text is run the same function as before to clean and tokenize it.  It is run through the model and the first out put is the two most simlar award numbers and the abstract for the most similiar awrad.
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
@@ -360,33 +336,14 @@ This model correctly matches the abstracts 92% of the time with reasonably high 
 
 <span class="c1">#If the text has similarity score of 0.5 or greater to an award abstract, we keep it for further plots</span>
 <span class="n">sims</span> <span class="o">=</span> <span class="p">[</span><span class="n">sims</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sims</span><span class="p">))</span> <span class="k">if</span> <span class="n">sims</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
+</pre>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>The most similar award numbers are 1413033 and 1610311, with similarity scores of 0.625 and 0.613.
 The most similar award abstract is:
 [&#39;The research group of Dr. Wenjun Du at the Central Michigan University develops new methodologies for preparing a new class of polymers by linking sugar units together and investigates the conditions for controlling the degradation of these polymers.  Sugar-based polymers are potentially compatible with biological systems and useful in biomedical applications.  The degradation of these polymers under controlled conditions to regenerate the monomers allows recycling of the polymer products and, therefore, is environmentally beneficial.  Outreach and educational activities of this project include developing an online course on sustainable polymer for high school teachers, partnering with the Central Michigan Science/Mathematics/Technology Center in organizing outreach activities for K-12 students and teachers, and mentoring graduate and undergraduate students in research.  &lt;br/&gt;&lt;br/&gt;Under the support of Macromolecular, Supramolecular and Nanochemistry Program of NSF, Dr. Wenjun Du aims to develop synthetic methodogies for preparing degradable polymers by connecting sugar units together via orthoester linkages, thereby circumventing the notoriously challenging syntheses of O-glycosyl linkages.  His research group studies the mechanism, scope and limitation of the polymerization process, explores the synthesis of high molecular weight sugar-based polymers by exploiting the reverse anomeric effect, and investigates the degradation of the sugar poly(orthoesters).&#39;]
 </pre>
-</div>
-</div>
 
-</div>
-</div>
 
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
