@@ -17,8 +17,7 @@ import string
 
 os.chdir('C:/Users/johns/Documents/Machine Learning/science funding project')
 awds = pd.read_csv('NSF CHE 2012.csv', encoding='latin-1')
-papers = pd.read_csv('che_paper_data.csv')
-pgms = ['6878', '6880', '6882', '6883', '6884', '6885', '9101', '9102', '6881']
+
 
 def doc2vec_abstracts(awds):
     #First we need to filter the data by program code. Some grants have multiple program
