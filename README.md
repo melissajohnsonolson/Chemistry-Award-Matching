@@ -1,8 +1,8 @@
 # Chemistry-Award-Matching
-These sets of scripts allow a user to match their own research description to funded chemistry awards and see the publication trends emerging from those awards.
-There are three separate scripts - one to obtain the publication information (cross ref paper data.py), one to train the model (doc2vec abstract training.py) and one that reads user input data and matches similar awards and shows funding and publication trends (research matching.py).  Each of these scripts have their own self contained functions and calls, but below I was through the basic procedural flow.  See the commenting in each script for more information.
+These sets of scripts allow a user to match their own research description to funded chemistry awards and see the publication and funding trends emerging from those awards.
+There are three separate scripts - one to obtain the publication information (cross ref paper data.py), one to train the model (doc2vec abstract training.py) and one that reads user text then matches similar awards and shows funding and publication trends (research matching.py).  Each of these scripts have their own self contained functions and calls, but below I walk through the basic procedural flow.  See the commenting in each script for more detailed information.
 
-The first step in setting up this routine is downloading the award informatin from the National Science Foundation. A copy of data is included in this repository, but it can also be found here:
+The first step is to download award information from the National Science Foundation. A copy of the data is included in this repository, but it can also be found here:
 
 https://www.nsf.gov/awardsearch/advancedSearch.jsp
 
@@ -12,7 +12,7 @@ The publication data used later on can be generated with the crossref paper data
 
 Once this data has all been collected, the Doc2Vec model can be trained with the doc2vec abstract training script. It is wrapped up as a function, but each step is broken down below:
 
-Import the necessary libraries and set the directory to the location of the abstract data. Load the csv into the function.
+Import the necessary libraries and set the directory to the location of the abstract data From NSF. Load the csv into the function.
 <body>
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
@@ -201,7 +201,7 @@ Here you can see the format of the awards data
   </tbody>
 </table>
 
-Here we filter by program elements to ensure only the core research programs are considered. the pgms parameter can be changed for any set of research programs one may want to examine (for example, to include Major Research Instrumetation or Research Exeperiences of Undergradutes). Here we also generate lists of 'stop' words and punctuation to remove and instantiate a lemmatizer to help clean up the abstract text.
+Here we filter by program elements to ensure only the core research programs are considered. The pgms parameter can be changed for any set of research programs one may want to examine (for example, to include Major Research Instrumetation or Research Exeperiences of Undergradutes). Here we also generate lists of 'stop' words and punctuation to remove, and instantiate a lemmatizer to help clean up the abstract text.
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -258,7 +258,7 @@ Now everything is wrapped up into a function and we can pass each each abstract 
 Here is was the abstract now looks like - tokenized and cleaned
 <pre>[&#39;project&#39;, &#39;funded&#39;, &#39;chemical&#39;, &#39;synthesis&#39;, &#39;program&#39;, &#39;chemistry&#39;, &#39;division&#39;, &#39;professor&#39;, &#39;tyler&#39;, &#39;mcquade&#39;, &#39;department&#39;, &#39;chemistry&#39;, &#39;biochemistry&#39;, &#39;florida&#39;, &#39;state&#39;, &#39;university&#39;, &#39;develop&#39;, &#39;new&#39;, &#39;synthetic&#39;, &#39;method&#39;, &#39;creating&#39;, &#39;stereoconvergent&#39;, &#39;allylic&#39;, &#39;substitution&#39;, &#39;providing&#39;, &#39;stereoisomer&#39;, &#39;trans&#39;, &#39;substrate&#39;, &#39;catalystcontrolled&#39;, &#39;reactivity&#39;, &#39;neighboring&#39;, &#39;stereocenters&#39;, &#39;limited&#39;, &#39;impact&#39;, &#39;diastereoselectivity&#39;, &#39;regiocontrolled&#39;, &#39;catalytic&#39;, &#39;hydroborations&#39;, &#39;rare&#39;, &#39;metal&#39;, &#39;rhodium&#39;, &#39;iridium&#39;, &#39;become&#39;, &#39;expensive&#39;, &#39;critically&#39;, &#39;important&#39;, &#39;increase&#39;, &#39;range&#39;, &#39;reaction&#39;, &#39;performed&#39;, &#39;inexpensive&#39;, &#39;metal&#39;, &#39;copper&#39;, &#39;resulting&#39;, &#39;method&#39;, &#39;could&#39;, &#39;efficient&#39;, &#39;selective&#39;, &#39;prior&#39;, &#39;reaction&#39;, &#39;could&#39;, &#39;enable&#39;, &#39;new&#39;, &#39;strategy&#39;, &#39;construct&#39;, &#39;valuable&#39;, &#39;complex&#39;, &#39;molecule&#39;, &#39;expensive&#39;, &#39;metal&#39;, &#39;providing&#39;, &#39;basic&#39;, &#39;science&#39;, &#39;necessary&#39;, &#39;improve&#39;, &#39;sustainability&#39;, &#39;proposed&#39;, &#39;work&#39;, &#39;predicted&#39;, &#39;result&#39;, &#39;thorough&#39;, &#39;understanding&#39;, &#39;catalyst&#39;, &#39;provide&#39;, &#39;greater&#39;, &#39;chemical&#39;, &#39;control&#39;, &#39;also&#39;, &#39;creation&#39;, &#39;promising&#39;, &#39;new&#39;, &#39;synthetic&#39;, &#39;method&#39;, &#39;successful&#39;, &#39;result&#39;, &#39;work&#39;, &#39;positively&#39;, &#39;impact&#39;, &#39;pharmaceutical&#39;, &#39;agrochemical&#39;, &#39;specialty&#39;, &#39;chemical&#39;, &#39;industry&#39;, &#39;addition&#39;, &#39;project&#39;, &#39;provide&#39;, &#39;excellent&#39;, &#39;training&#39;, &#39;student&#39;, &#39;undergraduate&#39;, &#39;postdoctoral&#39;, &#39;including&#39;, &#39;group&#39;, &#39;historically&#39;, &#39;underrepresented&#39;, &#39;science&#39;, &#39;student&#39;, &#39;become&#39;, &#39;vanguard&#39;, &#39;leading&#39;, &#39;way&#39;, &#39;future&#39;, &#39;environmentallyfriendly&#39;, &#39;internationallycompetitive&#39;, &#39;organic&#39;, &#39;chemistry&#39;]
 </pre>
-Now we can start training the model. First every abstract is tagged with it's award id, then the corpus of tagged abstracts is passed through the doc2vec model. The parameters of this model can be changed, please see the doc2vec documentation from gensim to do so.
+Now we can start training the model. First every abstract is tagged with its award id, then the corpus of tagged abstracts is passed through the doc2vec model. The parameters of this model can be changed, please see the doc2vec documentation from gensim to do so.
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
@@ -319,7 +319,7 @@ Now we can start running research descriptions through the research matching scr
 </pre>
 <pre>The development of biorenewable and chemically recyclable plastics holds real potential to not only preserve natural resources but also solve the end-of-life issue of plastic waste. However, materializing such potential and ultimately establishing a circular plastics economy requires that three challenges be met: energy cost, depolymerization selectivity, and depolymerizability and performance tradeoffs. Recent advances made in this field, especially the discovery of infinitely recyclable plastics, have yielded feasible solutions and design principles. Future directions will focus on designing monomer and polymer structures that deliver properties and performances for tailored application needs while maintaining complete recyclability and catalyst structures and integrated processes with high (de)polymerization activity, selectivity, and efficiency, ultimately solving the severe worldwide environmental problems created by non-recyclable plastics production and disposal.
 </pre>
-Now the text is run the same function as before to clean and tokenize it.  It is run through the model and the first out put is the two most simlar award numbers and the abstract for the most similiar awrad.
+Now the text is run through the same function as before to clean and tokenize it.  It is run through the model and the first out put is the two most simlar award numbers and the abstract for the most similiar awrad.
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
